@@ -1,0 +1,36 @@
+<div class="container p-4">
+  <div class="header flex justify-content-between align-items-center mb-4">
+    <h2 class="text-green-700">Lista de Imóveis</h2>
+    <button routerLink="/imoveis/cadastro" pButton label="Cadastrar Novo Imóvel" icon="pi pi-plus" class="p-button-success"></button>
+  </div>
+
+  <p-table [value]="imoveis" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Endereço</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-imovel>
+      <tr>
+        <td>{{ imovel.id }}</td>
+        <td>{{ imovel.nome }}</td>
+        <td>{{ imovel.endereco }}</td>
+        <td>{{ imovel.status }}</td>
+        <td>
+          <button pButton icon="pi pi-search" class="p-button-rounded p-button-info mr-2" title="Ver Detalhes"></button>
+          <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" title="Editar"></button>
+          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" title="Excluir"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="mt-5">
+    <button  pButton label="Voltar" icon="pi pi-arrow-left" class="p-button-secondary"></button>
+  </div>
+</div>

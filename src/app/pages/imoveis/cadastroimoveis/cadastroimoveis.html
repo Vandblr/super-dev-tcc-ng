@@ -1,0 +1,60 @@
+<div class="cadastro-container p-5">
+  <h2 class="text-green-700 mb-4">Cadastro de Imóvel</h2>
+
+  <div class="form grid gap-3">
+    <div class="col-12 md:col-6">
+      <label>Nome</label>
+      <input pInputText [(ngModel)]="nome" placeholder="Ex: Casa Azul" class="w-full" />
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Endereço</label>
+      <input pInputText [(ngModel)]="endereco" placeholder="Ex: Rua das Flores, 45" class="w-full" />
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Status</label>
+      <select [(ngModel)]="status" class="w-full">
+        <option value="" disabled selected>Selecione o status</option>
+        <option *ngFor="let item of statusList" [value]="item">{{ item }}</option>
+      </select>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Cor da Casa</label>
+      <input pInputText [(ngModel)]="cor" placeholder="Ex: Azul claro" class="w-full" />
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Garagem</label>
+      <select [(ngModel)]="garagem" class="w-full">
+        <option value="" disabled selected>Possui garagem?</option>
+        <option value="Sim">Sim</option>
+        <option value="Não">Não</option>
+      </select>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Quantidade de Quartos</label>
+      <input type="number" [(ngModel)]="quartos" min="0" class="w-full" />
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Quantidade de Banheiros</label>
+      <input type="number" [(ngModel)]="banheiros" min="0" class="w-full" />
+    </div>
+
+    <div class="col-12 md:col-6">
+      <label>Foto do Imóvel</label>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" class="w-full" />
+      <div *ngIf="imagem" class="preview mt-3">
+        <img [src]="imagem" alt="Pré-visualização da casa" class="preview-img" />
+      </div>
+    </div>
+  </div>
+
+  <div class="botoes mt-5 flex gap-3 justify-content-end">
+    <button pButton label="Salvar" icon="pi pi-check" class="p-button-success" (click)="salvar()"></button>
+    <button pButton label="Cancelar" icon="pi pi-times" class="p-button-secondary" (click)="cancelar()"></button>
+  </div>
+</div>

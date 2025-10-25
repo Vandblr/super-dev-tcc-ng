@@ -1,0 +1,51 @@
+@import 'primeicons/primeicons.css';
+
+
+
+
+
+:root {
+  --primary-color: #0078ff;
+  --secondary-color: #00c4b4;
+  --background-light: #f4f6f8;
+  --text-color: #495057;
+}
+
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-color-secondary {
+  color: var(--text-color);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-color) 10%, var(--secondary-color) 90%);
+  color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.p-menubar {
+  border: none !important;
+  background-color: var(--background-light) !important;
+}
+
+.card-custom {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 120, 255, 0.2);
+}
+
+footer {
+  background-color: var(--background-light);
+}
+
+button.p-button {
+  font-weight: 500;
+}
