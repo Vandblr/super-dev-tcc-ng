@@ -1,7 +1,7 @@
 <div class="cadastro-container p-5">
   <h2 class="text-green-700 mb-4">Cadastro de Imóvel</h2>
 
-  <div class="form grid gap-3">
+  <div>
     <div class="col-12 md:col-6">
       <label>Nome</label>
       <input pInputText [(ngModel)]="nome" placeholder="Ex: Casa Azul" class="w-full" />
@@ -14,10 +14,7 @@
 
     <div class="col-12 md:col-6">
       <label>Status</label>
-      <select [(ngModel)]="status" class="w-full">
-        <option value="" disabled selected>Selecione o status</option>
-        <option *ngFor="let item of statusList" [value]="item">{{ item }}</option>
-      </select>
+     <p-select [options]="statusList" [(ngModel)]="status"  placeholder="Selecione um status" class="w-full md:w-56" fluid />
     </div>
 
     <div class="col-12 md:col-6">

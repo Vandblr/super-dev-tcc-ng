@@ -3,16 +3,18 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+
 
 @Component({
   selector: 'app-cadastroimoveis',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule, InputTextModule,],
-  templateUrl: './cadastroimoveis.html',
-  styleUrl: './cadastroimoveis.scss'
+  imports: [CommonModule, FormsModule, ButtonModule, InputTextModule,SelectModule],
+  templateUrl: './cadastro.html',
+  styleUrl: './cadastro.scss'
 })
 export class CadastroImoveis {
-    nome: string = '';
+  nome: string = '';
   endereco: string = '';
   status: string = '';
   cor: string = '';

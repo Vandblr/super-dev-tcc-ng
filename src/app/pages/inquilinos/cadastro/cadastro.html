@@ -1,0 +1,48 @@
+<h2>Cadastrar Inquilino</h2>
+
+<div class="p-fluid">
+  <div class="field">
+    <label for="nome">Nome</label>
+    <input id="nome" type="text" pInputText [(ngModel)]="nome" />
+  </div>
+
+  <div class="field">
+    <label for="contato">Contato</label>
+    <input id="contato" type="text" pInputText [(ngModel)]="contato" />
+  </div>
+
+  <div class="field">
+    <label for="documento">Documento (CPF/CNPJ)</label>
+    <input id="documento" type="text" pInputText [(ngModel)]="documento" />
+  </div>
+
+  <div class="field">
+    <label for="pessoas">Quantidade de pessoas</label>
+    <input id="pessoas" type="number" pInputText [(ngModel)]="pessoas" />
+  </div>
+
+  <div class="field">
+    <label for="status">Status do pagamento</label>
+    <p-select
+      [options]="statusList"
+      [(ngModel)]="statusPagamento"
+      placeholder="Selecione o status"
+    ></p-select>
+  </div>
+
+  <div class="field">
+    <label for="observacao">Observação</label>
+    <textarea
+      id="observacao"
+      [(ngModel)]="observacao"
+      rows="3"
+      pInputTextarea
+    ></textarea>
+  </div>
+
+  <div class="flex gap-2 mt-3">
+    <button pButton type="button" label="Salvar" (click)="salvar()" class="p-button-success"></button>
+    <button pButton type="button" label="Cancelar" (click)="cancelar()" class="p-button-secondary"></button>
+  </div>
+</div>
+

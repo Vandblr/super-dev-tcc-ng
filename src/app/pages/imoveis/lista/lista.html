@@ -1,7 +1,8 @@
 <div class="container p-4">
   <div class="header flex justify-content-between align-items-center mb-4">
     <h2 class="text-green-700">Lista de Imóveis</h2>
-    <button routerLink="/imoveis/cadastro" pButton label="Cadastrar Novo Imóvel" icon="pi pi-plus" class="p-button-success"></button>
+    <button routerLink="/imoveis/cadastro" pButton label="Cadastrar Novo Imóvel" icon="pi pi-plus"
+      class="p-button-success"></button>
   </div>
 
   <p-table [value]="imoveis" [tableStyle]="{ 'min-width': '50rem' }">
@@ -31,6 +32,6 @@
   </p-table>
 
   <div class="mt-5">
-    <button  pButton label="Voltar" icon="pi pi-arrow-left" class="p-button-secondary"></button>
+    <button pButton label="Voltar" icon="pi pi-arrow-left" class="p-button-secondary"></button>
   </div>
 </div>
