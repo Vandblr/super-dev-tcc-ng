@@ -22,14 +22,7 @@ export class TelaHome {
   email = '';
   password = '';
 
-  constructor(private router: Router) {}
-
-  menuItems: MenuItem[] = [
-    { label: 'Início', icon: 'pi pi-home', command: () => this.router.navigate(['/home']) },
-    { label: 'Imóveis', icon: 'pi pi-building', command: () => this.router.navigate(['/imoveis']) },
-    { label: 'Inquilinos', icon: 'pi pi-users', command: () => this.router.navigate(['/inquilinos']) },
-    { label: 'Solicitações', icon: 'pi pi-wrench', command: () => this.router.navigate(['/solicitacoes']) },
-  ];
+  constructor(private router: Router) { }
 
   cards = [
     { title: 'Imóveis', subtitle: 'Gerenciamento Completo', icon: 'pi pi-home', description: 'Cadastre, edite e visualize imóveis.', route: '/imoveis' },

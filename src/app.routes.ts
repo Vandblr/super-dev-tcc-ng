@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
-import { Dashboard } from './app/pages/dashboard/dashboard';
-import { Documentation } from './app/pages/documentation/documentation';
 import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { TelaLogin } from '@/pages/login/login';
@@ -19,21 +17,21 @@ export const appRoutes: Routes = [
         path: '',
         component: AppLayout,
         children: [
-            { path: '', component: Dashboard },
-            { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
-            { path: 'documentation', component: Documentation },
-            { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
+            { path: '', component: TelaHome },
+            { path: 'imoveis', component: ListaImoveis },
+            { path: 'imoveis/cadastro', component: CadastroImoveis },
+            { path: 'inquilinos', component: ListaInquilinos },
+            { path: 'inquilinos/cadastro', component: CadastroInquilinos },
+            { path: 'solicitacoes', component: ListaSolicitacoes },
+            { path: 'solicitacoes/cadastro', component: CadastroSolicitacoes },
         ]
     },
+    { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') },
+
     { path: 'login', component: TelaLogin },
     { path: 'home', component: TelaHome },
     { path: 'homeoffline', component: TelaHomeOffline },
-    { path: 'imoveis', component: ListaImoveis },
-    { path: 'imoveis/cadastro', component: CadastroImoveis },
-    { path:  'inquilinos', component: ListaInquilinos},
-    { path: 'inquilinos/cadastro', component: CadastroInquilinos},
-    { path: 'solicitacoes', component: ListaSolicitacoes},
-    { path: 'solicitacoes/cadastro', component: CadastroSolicitacoes},
+
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
