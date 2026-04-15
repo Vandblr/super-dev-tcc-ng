@@ -1,0 +1,78 @@
+<div class="cadastro-page">
+  <p-card header="Criar Conta" subheader="Preencha os dados para se cadastrar" class="cadastro-card">
+
+    <div class="p-fluid">
+
+      <!-- NOME -->
+      <div class="field">
+        <label for="nome">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          pInputText
+          [(ngModel)]="nome"
+          class="w-full"
+          placeholder="Digite seu nome"
+        />
+      </div>
+
+      <!-- EMAIL -->
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          [(ngModel)]="email"
+          class="w-full"
+          placeholder="Digite seu e-mail"
+        />
+      </div>
+
+      <!-- SENHA -->
+      <div class="field">
+        <label for="senha">Senha</label>
+        <p-password
+          id="senha"
+          [(ngModel)]="senha"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          placeholder="Digite sua senha"
+        ></p-password>
+      </div>
+
+      <!-- CONFIRMAR SENHA -->
+      <div class="field">
+        <label for="confirmarSenha">Confirmar senha</label>
+        <p-password
+          id="confirmarSenha"
+          [(ngModel)]="confirmarSenha"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          placeholder="Confirme sua senha"
+        ></p-password>
+      </div>
+
+      <!-- BOTÃO -->
+      <button
+        pButton
+        label="Cadastrar"
+        icon="pi pi-user-plus"
+        class="w-full mt-3"
+        (click)="cadastrar()"
+      ></button>
+
+      <!-- VOLTAR PARA LOGIN -->
+      <div class="login-link">
+        <span>Já tem conta?</span>
+        <a routerLink="/login">Entrar</a>
+      </div>
+
+    </div>
+
+  </p-card>
+</div>
