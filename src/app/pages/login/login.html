@@ -1,4 +1,43 @@
-  <div>
-        <label for="fluid" class="font-bold mb-2 block">Login</label>
-        <input type="text" pInputText id="fluid" fluid />
+<div class="login-page">
+  <p-card header="Acessar Sistema" subheader="Faça login para continuar" class="login-card">
+    <div class="p-fluid">
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          [(ngModel)]="email"
+          class="w-full"
+          placeholder="Digite seu e-mail"
+        />
+      </div>
+
+      <div class="field">
+        <label for="senha">Senha</label>
+        <p-password
+          id="senha"
+          [(ngModel)]="senha"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          placeholder="Digite sua senha"
+        ></p-password>
+      </div>
+
+      <button
+        pButton
+        label="Entrar"
+        icon="pi pi-sign-in"
+        class="w-full mt-3"
+        (click)="entrar()"
+      ></button>
+
+      <div class="cadastro-link">
+        <span>Não tem conta?</span>
+        <a routerLink="/cadastro">Cadastre-se</a>
+      </div>
     </div>
+  </p-card>
+</div>

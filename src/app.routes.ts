@@ -13,11 +13,17 @@ import { CadastroSolicitacoes } from '@/pages/solicitacoes/cadastro/cadastro';
 import { ListaSolicitacoes } from '@/pages/solicitacoes/lista/lista';
 
 export const appRoutes: Routes = [
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+    { path: 'login', component: TelaLogin },
+    { path: 'home', component: TelaHome },
+    { path: 'homeoffline', component: TelaHomeOffline },
+
     {
         path: '',
         component: AppLayout,
         children: [
-            { path: '', component: TelaHome },
+            { path: 'painel', component: TelaHome },
             { path: 'imoveis', component: ListaImoveis },
             { path: 'imoveis/cadastro', component: CadastroImoveis },
             { path: 'inquilinos', component: ListaInquilinos },
@@ -26,14 +32,11 @@ export const appRoutes: Routes = [
             { path: 'solicitacoes/cadastro', component: CadastroSolicitacoes },
         ]
     },
+
     { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') },
-
-    { path: 'login', component: TelaLogin },
-    { path: 'home', component: TelaHome },
-    { path: 'homeoffline', component: TelaHomeOffline },
-
     { path: 'landing', component: Landing },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    { path: '**', redirectTo: '/notfound' }
+
+    { path: '**', redirectTo: 'login' }
 ];
