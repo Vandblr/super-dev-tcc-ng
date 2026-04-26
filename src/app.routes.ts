@@ -4,25 +4,23 @@ import { Landing } from './app/pages/landing/landing';
 import { Notfound } from './app/pages/notfound/notfound';
 import { TelaLogin } from '@/pages/login/login';
 import { TelaHome } from '@/pages/home/home';
-import { TelaHomeOffline } from '@/pages/home/homeoffline/homeoffline';
+import { TelaHomeOffline } from '@/pages/homeoffline/homeoffline';
+import { CadastroUsuario } from '@/pages/cadastro/cadastro';
 import { CadastroImoveis } from '@/pages/imoveis/cadastro/cadastro';
 import { ListaImoveis } from '@/pages/imoveis/lista/lista';
 import { CadastroInquilinos } from '@/pages/inquilinos/cadastro/cadastro';
 import { ListaInquilinos } from '@/pages/inquilinos/lista/lista';
 import { CadastroSolicitacoes } from '@/pages/solicitacoes/cadastro/cadastro';
 import { ListaSolicitacoes } from '@/pages/solicitacoes/lista/lista';
-import { CadastroUsuario } from '@/pages/cadastro/cadastro';
 
 export const appRoutes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-    // fora do layout
+    // área pública
+    { path: '', component: TelaHomeOffline },
     { path: 'login', component: TelaLogin },
     { path: 'cadastro', component: CadastroUsuario },
-    { path: 'homeoffline', component: TelaHomeOffline },
     { path: 'landing', component: Landing },
 
-    // dentro do layout
+    // área interna com layout
     {
         path: '',
         component: AppLayout,
@@ -41,5 +39,5 @@ export const appRoutes: Routes = [
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
 
     { path: 'notfound', component: Notfound },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: '' }
 ];

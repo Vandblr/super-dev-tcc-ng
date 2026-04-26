@@ -14,14 +14,20 @@ import { SelectModule } from 'primeng/select';
   styleUrl: './cadastro.scss'
 })
 export class CadastroSolicitacoes {
-
   tipoServico: string = '';
   data: Date | null = null;
   custo: number | null = null;
   status: string = '';
   observacao: string = '';
 
-   statusList = ['Pendente', 'Em andamento', 'Concluído', 'Cancelado'];
+  statusList = ['Pendente', 'Em andamento', 'Concluído', 'Cancelado'];
   servicosList = ['Encanamento', 'Pintura', 'Jardinagem', 'Elétrica', 'Outro'];
 
+  salvar() {
+    alert('Solicitação cadastrada com sucesso!');
+  }
+
+  cancelar() {
+    alert('Cadastro cancelado!');
+  }
 }

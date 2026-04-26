@@ -1,44 +1,107 @@
-<section class="hero surface-0 text-center p-6">
-  <h1 class="text-5xl font-bold text-primary mb-3">Gerencie seus imóveis com eficiência</h1>
-  <p class="text-lg mb-5 text-color-secondary">
-    Controle de imóveis, inquilinos e solicitações de manutenção em um só lugar.
-  </p>
-  <button pButton label="Explorar Imóveis" icon="pi pi-home" class="p-button-lg p-button-rounded"></button>
-</section>
+<div class="dashboard-page">
 
+  <section class="dashboard-hero">
+    <div>
+      <span class="tag">Painel do Proprietário</span>
+      <h1>Bem-vindo ao HouseManager</h1>
+      <p>
+        Acompanhe seus imóveis, inquilinos, solicitações e informações financeiras
+        em um só lugar.
+      </p>
+    </div>
 
-<section class="grid p-6">
-  <div class="col-12 md:col-4" *ngFor="let card of cards">
-    <p-card [header]="card.title" [subheader]="card.subtitle" class="card-custom shadow-3 mb-4">
-      <ng-template pTemplate="header">
-        <div class="flex justify-content-center align-items-center py-3">
-          <i [class]="card.icon + ' text-6xl text-primary'"></i>
+    <div class="hero-actions">
+      <button
+        pButton
+        label="Cadastrar Imóvel"
+        icon="pi pi-plus"
+        routerLink="/imoveis/cadastro"
+      ></button>
+
+      <button
+        pButton
+        label="Nova Solicitação"
+        icon="pi pi-wrench"
+        class="p-button-outlined"
+        routerLink="/solicitacoes/cadastro"
+      ></button>
+    </div>
+  </section>
+
+  <section class="summary-grid">
+    <p-card
+      class="summary-card"
+      *ngFor="let card of cardsResumo"
+      (click)="navegar(card.rota)"
+    >
+      <div class="summary-content">
+        <div class="icon-box">
+          <i [class]="card.icone"></i>
         </div>
-      </ng-template>
-      <p class="text-center text-color-secondary">{{ card.description }}</p>
-      <ng-template pTemplate="footer">
-        <div class="flex justify-content-center">
-          <button pButton label="Acessar" icon="pi pi-arrow-right" class="p-button-rounded"
-            (click)="navigate(card.route)"></button>
+
+        <div>
+          <h3>{{ card.valor }}</h3>
+          <strong>{{ card.titulo }}</strong>
+          <p>{{ card.descricao }}</p>
         </div>
-      </ng-template>
+      </div>
     </p-card>
-  </div>
-</section>
+  </section>
 
+  <section class="dashboard-grid">
 
+    <p-card header="Pagamentos Recentes" class="panel-card">
+      <p-table [value]="pagamentosRecentes">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Inquilino</th>
+            <th>Imóvel</th>
+            <th>Valor</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
 
-<p-dialog header="Acessar Conta" [(visible)]="showLoginDialog" [modal]="true" [style]="{ width: '25rem' }"
-  [closable]="true">
-  <div class="p-fluid">
-    <div class="field mb-3">
-      <label for="email">E-mail</label>
-      <input id="email" type="text" pInputText [(ngModel)]="email" />
+        <ng-template pTemplate="body" let-pagamento>
+          <tr>
+            <td>{{ pagamento.inquilino }}</td>
+            <td>{{ pagamento.imovel }}</td>
+            <td>{{ pagamento.valor }}</td>
+            <td>{{ pagamento.status }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <p-card header="Alertas do Sistema" class="panel-card">
+      <div class="alerts">
+        <div class="alert-item warning">
+          <i class="pi pi-exclamation-triangle"></i>
+          <span>Aluguel da Casa Verde está atrasado.</span>
+        </div>
+
+        <div class="alert-item info">
+          <i class="pi pi-info-circle"></i>
+          <span>Solicitação de pintura aguardando conclusão.</span>
+        </div>
+
+        <div class="alert-item success">
+          <i class="pi pi-check-circle"></i>
+          <span>Pagamento da Casa Azul confirmado.</span>
+        </div>
+      </div>
+    </p-card>
+
+  </section>
+
+  <section class="quick-actions">
+    <h2>Ações rápidas</h2>
+
+    <div class="actions-grid">
+      <button pButton label="Ver Imóveis" icon="pi pi-building" routerLink="/imoveis"></button>
+      <button pButton label="Ver Inquilinos" icon="pi pi-users" routerLink="/inquilinos"></button>
+      <button pButton label="Ver Solicitações" icon="pi pi-wrench" routerLink="/solicitacoes"></button>
+      <button pButton label="Relatórios" icon="pi pi-chart-bar" class="p-button-secondary"></button>
     </div>
-    <div class="field mb-3">
-      <label for="password">Senha</label>
-      <input id="password" type="password" pInputText [(ngModel)]="password" />
-    </div>
-    <button pButton label="Entrar" icon="pi pi-check" class="w-full" (click)="login()"></button>
-  </div>
-</p-dialog>
+  </section>
+
+</div>

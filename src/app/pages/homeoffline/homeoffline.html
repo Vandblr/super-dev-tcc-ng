@@ -1,0 +1,94 @@
+<div class="home-offline">
+
+  <header class="topbar">
+    <div class="logo">
+      <i class="pi pi-building"></i>
+      <span>HouseManager</span>
+    </div>
+
+    <div class="actions">
+      <button
+        pButton
+        label="Entrar"
+        icon="pi pi-sign-in"
+        routerLink="/login"
+      ></button>
+
+      <button
+        pButton
+        label="Cadastrar"
+        icon="pi pi-user-plus"
+        class="p-button-outlined"
+        routerLink="/cadastro"
+      ></button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Gerencie seus imóveis com mais organização</h1>
+
+      <p>
+        Controle imóveis, inquilinos, solicitações de manutenção e acompanhe
+        os principais dados do seu negócio em um só lugar.
+      </p>
+
+      <div class="hero-buttons">
+        <button
+          pButton
+          label="Acessar Sistema"
+          icon="pi pi-arrow-right"
+          routerLink="/login"
+        ></button>
+
+        <button
+          pButton
+          label="Criar Conta"
+          icon="pi pi-user-plus"
+          class="p-button-outlined"
+          routerLink="/cadastro"
+        ></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature-card" *ngFor="let recurso of recursos">
+      <p-card [header]="recurso.titulo">
+        <ng-template pTemplate="header">
+          <div class="icon-area">
+            <i [class]="recurso.icone"></i>
+          </div>
+        </ng-template>
+
+        <p>{{ recurso.descricao }}</p>
+      </p-card>
+    </div>
+  </section>
+
+  <section class="preview">
+    <h2>O que o sistema oferece?</h2>
+
+    <div class="preview-grid">
+      <div>
+        <strong>Dashboard inteligente</strong>
+        <p>Resumo de imóveis, inquilinos, solicitações e finanças.</p>
+      </div>
+
+      <div>
+        <strong>Histórico organizado</strong>
+        <p>Acompanhe entrada, saída, manutenções e observações dos imóveis.</p>
+      </div>
+
+      <div>
+        <strong>Base para crescimento</strong>
+        <p>Futuramente pode receber integração com Pix, relatórios e IA.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 HouseManager - Projeto TCC</p>
+  </footer>
+
+</div>

@@ -1,41 +1,102 @@
-<div>
+<div class="imoveis-page">
+  <section class="page-hero">
+    <div>
+      <span class="tag">Imóveis</span>
+      <h1>Lista de Imóveis</h1>
+      <p>Visualize, cadastre e acompanhe o status das casas cadastradas.</p>
+    </div>
 
-  <div class="">
-    <button pButton label="Voltar" icon="pi pi-arrow-left" class="p-button-secondary" routerLink="/"></button>
-  </div>
+    <div class="hero-actions">
+      <button
+        routerLink="/imoveis/cadastro"
+        pButton
+        label="Novo Imóvel"
+        icon="pi pi-plus"
+        class="p-button-success"
+      ></button>
 
+      <button
+        pButton
+        label="Voltar"
+        icon="pi pi-arrow-left"
+        class="p-button-outlined"
+        routerLink="/painel"
+      ></button>
+    </div>
+  </section>
 
-  <div class="flex justify-between align-items-center mb-4">
-    <h2 class="text-green-700">Lista de Imóveis</h2>
-    <button routerLink="/imoveis/cadastro" pButton label="Novo Imóvel" icon="pi pi-plus"
-      class="p-button-success"></button>
-  </div>
+  <section class="summary-grid">
+    <div class="summary-box">
+      <i class="pi pi-building"></i>
+      <div>
+        <h3>{{ imoveis.length }}</h3>
+        <p>Imóveis cadastrados</p>
+      </div>
+    </div>
 
+    <div class="summary-box">
+      <i class="pi pi-check-circle"></i>
+      <div>
+        <h3>1</h3>
+        <p>Disponíveis</p>
+      </div>
+    </div>
 
-  <p-table [value]="imoveis" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Endereço</th>
-        <th>Status</th>
-        <th>Ações</th>
-      </tr>
-    </ng-template>
+    <div class="summary-box">
+      <i class="pi pi-users"></i>
+      <div>
+        <h3>1</h3>
+        <p>Ocupados</p>
+      </div>
+    </div>
+  </section>
 
-    <ng-template pTemplate="body" let-imovel>
-      <tr>
-        <td>{{ imovel.id }}</td>
-        <td>{{ imovel.nome }}</td>
-        <td>{{ imovel.endereco }}</td>
-        <td>{{ imovel.status }}</td>
-        <td>
-          <button pButton icon="pi pi-search" class="p-button-rounded p-button-info mr-2" title="Ver Detalhes"></button>
-          <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" title="Editar"></button>
-          <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" title="Excluir"></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <section class="table-card">
+    <p-table [value]="imoveis" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Endereço</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
 
+      <ng-template pTemplate="body" let-imovel>
+        <tr>
+          <td>{{ imovel.id }}</td>
+          <td>{{ imovel.nome }}</td>
+          <td>{{ imovel.endereco }}</td>
+          <td>
+            <span class="status-badge">
+              {{ imovel.status }}
+            </span>
+          </td>
+          <td>
+            <button
+              pButton
+              icon="pi pi-search"
+              class="p-button-rounded p-button-info mr-2"
+              title="Ver Detalhes"
+            ></button>
+
+            <button
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-warning mr-2"
+              title="Editar"
+            ></button>
+
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger"
+              title="Excluir"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
 </div>

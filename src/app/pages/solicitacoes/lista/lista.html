@@ -1,67 +1,110 @@
-<div class="container p-4">
-  <div class="header flex justify-content-between align-items-center mb-4">
-    <h2 class="text-green-700">Lista de Solicitações</h2>
-    <button
-      routerLink="/solicitacoes/cadastro"
-      pButton
-      label="Cadastrar Nova Solicitação"
-      icon="pi pi-plus"
-      class="p-button-success"
-    ></button>
-  </div>
+<div class="solicitacoes-page">
+  <section class="page-hero">
+    <div>
+      <span class="tag">Solicitações</span>
+      <h1>Lista de Solicitações</h1>
+      <p>Acompanhe manutenções, serviços, custos e status de cada imóvel.</p>
+    </div>
 
-  <p-table [value]="solicitacoes" [tableStyle]="{ 'min-width': '60rem' }">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Tipo de Serviço</th>
-        <th>Data</th>
-        <th>Custo</th>
-        <th>Status</th>
-        <th>Casa Vinculada</th>
-        <th>Ações</th>
-      </tr>
-    </ng-template>
+    <div class="hero-actions">
+      <button
+        routerLink="/solicitacoes/cadastro"
+        pButton
+        label="Nova Solicitação"
+        icon="pi pi-plus"
+        class="p-button-success"
+      ></button>
 
-    <ng-template pTemplate="body" let-sol>
-      <tr>
-        <td>{{ sol.id }}</td>
-        <td>{{ sol.tipoServico }}</td>
-        <td>{{ sol.data }}</td>
-        <td>R$ {{ sol.custo }}</td>
-        <td>{{ sol.status }}</td>
-        <td>{{ sol.vinculoCasa }}</td>
-        <td>
-          <button
-            pButton
-            icon="pi pi-search"
-            class="p-button-rounded p-button-info mr-2"
-            title="Ver Detalhes"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-warning mr-2"
-            title="Editar"
-          ></button>
-          <button
-            pButton
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger"
-            title="Excluir"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+      <button
+        pButton
+        label="Voltar"
+        icon="pi pi-arrow-left"
+        class="p-button-outlined"
+        routerLink="/painel"
+      ></button>
+    </div>
+  </section>
 
-  <div class="mt-5">
-    <button
-      pButton
-      label="Voltar"
-      icon="pi pi-arrow-left"
-      class="p-button-secondary"
-      routerLink="/dashboard"
-    ></button>
-  </div>
+  <section class="summary-grid">
+    <div class="summary-box">
+      <i class="pi pi-wrench"></i>
+      <div>
+        <h3>{{ solicitacoes.length }}</h3>
+        <p>Solicitações cadastradas</p>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <i class="pi pi-clock"></i>
+      <div>
+        <h3>2</h3>
+        <p>Pendentes / em andamento</p>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <i class="pi pi-check-circle"></i>
+      <div>
+        <h3>1</h3>
+        <p>Concluídas</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="table-card">
+    <p-table [value]="solicitacoes" [tableStyle]="{ 'min-width': '70rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Tipo de Serviço</th>
+          <th>Data</th>
+          <th>Custo</th>
+          <th>Status</th>
+          <th>Casa Vinculada</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-sol>
+        <tr>
+          <td>{{ sol.id }}</td>
+          <td>{{ sol.tipoServico }}</td>
+          <td>{{ sol.data }}</td>
+          <td>R$ {{ sol.custo }}</td>
+          <td>
+            <span
+              class="status-badge"
+              [class.status-alert]="sol.status === 'Pendente'"
+              [class.status-progress]="sol.status === 'Em andamento'"
+            >
+              {{ sol.status }}
+            </span>
+          </td>
+          <td>{{ sol.vinculoCasa }}</td>
+          <td>
+            <button
+              pButton
+              icon="pi pi-search"
+              class="p-button-rounded p-button-info mr-2"
+              title="Ver Detalhes"
+            ></button>
+
+            <button
+              pButton
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-warning mr-2"
+              title="Editar"
+            ></button>
+
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger"
+              title="Excluir"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
 </div>

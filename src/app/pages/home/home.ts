@@ -1,45 +1,65 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MenubarModule } from 'primeng/menubar';
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { MenuItem } from 'primeng/api';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, MenubarModule, ButtonModule, CardModule, DialogModule, InputTextModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ButtonModule,
+    CardModule,
+    TableModule
+  ],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })
 export class TelaHome {
-  currentYear = new Date().getFullYear();
-  showLoginDialog = false;
-  email = '';
-  password = '';
-
-  constructor(private router: Router) { }
-
-  cards = [
-    { title: 'Imóveis', subtitle: 'Gerenciamento Completo', icon: 'pi pi-home', description: 'Cadastre, edite e visualize imóveis.', route: '/imoveis' },
-    { title: 'Inquilinos', subtitle: 'Controle de Locatários', icon: 'pi pi-users', description: 'Gerencie dados e vínculos de inquilinos.', route: '/inquilinos' },
-    { title: 'Solicitações', subtitle: 'Manutenções e Pedidos', icon: 'pi pi-wrench', description: 'Acompanhe solicitações e serviços.', route: '/solicitacoes' }
+  cardsResumo = [
+    {
+      titulo: 'Imóveis',
+      valor: 5,
+      descricao: 'Imóveis cadastrados',
+      icone: 'pi pi-building',
+      rota: '/imoveis'
+    },
+    {
+      titulo: 'Inquilinos',
+      valor: 4,
+      descricao: 'Inquilinos ativos',
+      icone: 'pi pi-users',
+      rota: '/inquilinos'
+    },
+    {
+      titulo: 'Solicitações',
+      valor: 2,
+      descricao: 'Manutenções pendentes',
+      icone: 'pi pi-wrench',
+      rota: '/solicitacoes'
+    },
+    {
+      titulo: 'Lucro Mensal',
+      valor: 'R$ 3.250',
+      descricao: 'Estimativa do mês',
+      icone: 'pi pi-wallet',
+      rota: '/financeiro'
+    }
   ];
 
-  navigate(route: string) {
-    this.router.navigate([route]);
-  }
+  pagamentosRecentes = [
+    { inquilino: 'João Silva', imovel: 'Casa Azul', valor: 'R$ 1.200', status: 'Pago' },
+    { inquilino: 'Maria Santos', imovel: 'Casa Verde', valor: 'R$ 950', status: 'Atrasado' },
+    { inquilino: 'Pedro Oliveira', imovel: 'Casa Centro', valor: 'R$ 1.100', status: 'Pendente' }
+  ];
 
-  login() {
-    if (this.email === 'admin@house.com' && this.password === '1234') {
-      alert('Login realizado com sucesso!');
-      this.showLoginDialog = false;
-    } else {
-      alert('Usuário ou senha inválidos.');
-    }
+  constructor(private router: Router) {}
+
+  navegar(rota: string) {
+    this.router.navigate([rota]);
   }
 }
