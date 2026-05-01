@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import Base, engine, SessionLocal
@@ -8,6 +9,15 @@ from schemas import ImovelCriar, ImovelAtualizar, ImovelResposta
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API HouseManager")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 def get_db():
     db = SessionLocal()
