@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,19 +13,45 @@ interface Imovel {
   nome: string;
   endereco: string;
   status: string;
+  cor?: string;
+  garagem?: string;
+  quartos?: number;
+  banheiros?: number;
 }
 
 @Component({
   selector: 'app-lista-imovel',
- imports: [CommonModule, TableModule, ButtonModule, CardModule, InputTextModule, RouterLink],
+  standalone: true,
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    RouterLink
+  ],
   templateUrl: './lista.html',
   styleUrl: './lista.scss'
 })
-export class ListaImoveis {
-   imoveis: Imovel[] = [
-    { id: 1, nome: 'Casa Azul', endereco: 'Rua das Flores, 45', status: 'Ocupado' },
-    { id: 2, nome: 'Apartamento Sol', endereco: 'Av. Brasil, 1020', status: 'Disponível' },
-    { id: 3, nome: 'Casa Verde', endereco: 'Rua Jardim, 87', status: 'Em manutenção' }
-  ];
+export class ListaImoveis implements OnInit {
+  imoveis: Imovel[] = [];
 
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.listarImoveis();
+  }
+
+  listarImoveis() {
+    this.http.get<Imovel[]>('http://localhost:8000/imoveis')
+      .subscribe({
+        next: (dados) => {
+          this.imoveis = dados;
+        },
+        error: (erro) => {
+          console.error(erro);
+          alert('Erro ao carregar imóveis.');
+        }
+      });
+  }
 }
