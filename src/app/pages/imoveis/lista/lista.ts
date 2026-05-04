@@ -54,4 +54,22 @@ export class ListaImoveis implements OnInit {
         }
       });
   }
+  excluir(imovel: Imovel) {
+  const confirmar = confirm(`Deseja excluir o imóvel ${imovel.nome}?`);
+
+  if (!confirmar) {
+    return;
+  }
+
+  this.http.delete(`http://localhost:8000/imoveis/${imovel.id}`).subscribe({
+    next: () => {
+      alert('Imóvel excluído com sucesso!');
+      this.listarImoveis();
+    },
+    error: (erro) => {
+      console.error(erro);
+      alert('Erro ao excluir imóvel.');
+    }
+  });
+}
 }
