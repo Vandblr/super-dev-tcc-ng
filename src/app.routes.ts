@@ -28,6 +28,7 @@ export const appRoutes: Routes = [
             { path: 'painel', component: TelaHome },
             { path: 'imoveis', component: ListaImoveis },
             { path: 'imoveis/cadastro', component: CadastroImoveis },
+            { path: 'imoveis/editar/:id', component: CadastroImoveis },
             { path: 'inquilinos', component: ListaInquilinos },
             { path: 'inquilinos/cadastro', component: CadastroInquilinos },
             { path: 'solicitacoes', component: ListaSolicitacoes },
