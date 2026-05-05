@@ -2,6 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { DialogModule } from 'primeng/dialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -27,7 +31,10 @@ interface Imovel {
     TableModule,
     ButtonModule,
     CardModule,
+    DialogModule,
     InputTextModule,
+    ToastModule,
+    ConfirmDialogModule,
     RouterLink
   ],
   templateUrl: './lista.html',
@@ -36,7 +43,14 @@ interface Imovel {
 export class ListaImoveis implements OnInit {
   imoveis: Imovel[] = [];
 
-  constructor(private http: HttpClient) {}
+  imovelSelecionado: Imovel | null = null;
+  mostrarDetalhes: boolean = false;
+
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.listarImoveis();
@@ -50,26 +64,49 @@ export class ListaImoveis implements OnInit {
         },
         error: (erro) => {
           console.error(erro);
-          alert('Erro ao carregar imóveis.');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao carregar imóveis.'
+          });
         }
       });
   }
-  excluir(imovel: Imovel) {
-  const confirmar = confirm(`Deseja excluir o imóvel ${imovel.nome}?`);
 
-  if (!confirmar) {
-    return;
+  verDetalhes(imovel: Imovel) {
+    this.imovelSelecionado = imovel;
+    this.mostrarDetalhes = true;
   }
 
-  this.http.delete(`http://localhost:8000/imoveis/${imovel.id}`).subscribe({
-    next: () => {
-      alert('Imóvel excluído com sucesso!');
-      this.listarImoveis();
-    },
-    error: (erro) => {
-      console.error(erro);
-      alert('Erro ao excluir imóvel.');
-    }
-  });
-}
+  excluir(imovel: Imovel) {
+    this.confirmationService.confirm({
+      message: `Deseja excluir o imóvel ${imovel.nome}?`,
+      header: 'Confirmar exclusão',
+      icon: 'pi pi-exclamation-triangle',
+
+      accept: () => {
+        this.http.delete(`http://localhost:8000/imoveis/${imovel.id}`)
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Imóvel excluído com sucesso!'
+              });
+
+              this.listarImoveis();
+            },
+            error: (erro) => {
+              console.error(erro);
+
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Erro ao excluir imóvel.'
+              });
+            }
+          });
+      }
+    });
+  }
 }
