@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from database import Base
 
+
 class Imovel(Base):
     __tablename__ = "imoveis"
 
@@ -12,3 +13,15 @@ class Imovel(Base):
     garagem = Column(String, nullable=True)
     quartos = Column(Integer, nullable=True)
     banheiros = Column(Integer, nullable=True)
+
+
+class Inquilino(Base):
+    __tablename__ = "inquilinos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String, nullable=False)
+    contato = Column(String, nullable=False)
+    documento = Column(String, nullable=False)
+    pessoas = Column(Integer, nullable=True)
+    status_pagamento = Column(String, nullable=False)
+    observacao = Column(String, nullable=True)

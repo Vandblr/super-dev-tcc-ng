@@ -3,8 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import Base, engine, SessionLocal
-from models import Imovel
-from schemas import ImovelCriar, ImovelAtualizar, ImovelResposta
+from models import Imovel, Inquilino
+from schemas import (
+    ImovelCriar,
+    ImovelAtualizar,
+    ImovelResposta,
+    InquilinoCriar,
+    InquilinoAtualizar,
+    InquilinoResposta
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -98,3 +105,72 @@ def deletar_imovel(imovel_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"mensagem": "Imóvel deletado com sucesso"}
+
+@app.post("/inquilinos", response_model=InquilinoResposta)
+def criar_inquilino(inquilino: InquilinoCriar, db: Session = Depends(get_db)):
+    novo_inquilino = Inquilino(
+        nome=inquilino.nome,
+        contato=inquilino.contato,
+        documento=inquilino.documento,
+        pessoas=inquilino.pessoas,
+        status_pagamento=inquilino.status_pagamento,
+        observacao=inquilino.observacao
+    )
+
+    db.add(novo_inquilino)
+    db.commit()
+    db.refresh(novo_inquilino)
+
+    return novo_inquilino
+
+
+@app.get("/inquilinos", response_model=list[InquilinoResposta])
+def listar_inquilinos(db: Session = Depends(get_db)):
+    return db.query(Inquilino).all()
+
+
+@app.get("/inquilinos/{inquilino_id}", response_model=InquilinoResposta)
+def buscar_inquilino(inquilino_id: int, db: Session = Depends(get_db)):
+    inquilino = db.query(Inquilino).filter(Inquilino.id == inquilino_id).first()
+
+    if not inquilino:
+        raise HTTPException(status_code=404, detail="Inquilino não encontrado")
+
+    return inquilino
+
+
+@app.put("/inquilinos/{inquilino_id}", response_model=InquilinoResposta)
+def atualizar_inquilino(
+    inquilino_id: int,
+    dados: InquilinoAtualizar,
+    db: Session = Depends(get_db)
+):
+    inquilino = db.query(Inquilino).filter(Inquilino.id == inquilino_id).first()
+
+    if not inquilino:
+        raise HTTPException(status_code=404, detail="Inquilino não encontrado")
+
+    inquilino.nome = dados.nome
+    inquilino.contato = dados.contato
+    inquilino.documento = dados.documento
+    inquilino.pessoas = dados.pessoas
+    inquilino.status_pagamento = dados.status_pagamento
+    inquilino.observacao = dados.observacao
+
+    db.commit()
+    db.refresh(inquilino)
+
+    return inquilino
+
+
+@app.delete("/inquilinos/{inquilino_id}")
+def deletar_inquilino(inquilino_id: int, db: Session = Depends(get_db)):
+    inquilino = db.query(Inquilino).filter(Inquilino.id == inquilino_id).first()
+
+    if not inquilino:
+        raise HTTPException(status_code=404, detail="Inquilino não encontrado")
+
+    db.delete(inquilino)
+    db.commit()
+
+    return {"mensagem": "Inquilino deletado com sucesso"}
