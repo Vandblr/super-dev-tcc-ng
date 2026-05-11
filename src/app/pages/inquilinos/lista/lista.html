@@ -75,11 +75,12 @@
           <td>
             <span
               class="status-badge"
-              [class.status-alert]="inq.statusPagamento === 'Atrasado'"
+              [class.status-alert]="inq.status_pagamento === 'Atrasado'"
             >
-              {{ inq.statusPagamento }}
+              {{ inq.status_pagamento }}
             </span>
           </td>
+
           <td>
             <button
               pButton
@@ -100,6 +101,7 @@
               icon="pi pi-trash"
               class="p-button-rounded p-button-danger"
               title="Excluir"
+              (click)="excluir(inq)"
             ></button>
           </td>
         </tr>

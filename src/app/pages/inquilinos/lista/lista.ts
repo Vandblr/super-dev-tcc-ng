@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
-
 
 interface Inquilino {
   id: number;
@@ -14,24 +15,64 @@ interface Inquilino {
   contato: string;
   documento: string;
   pessoas: number;
-  statusPagamento: string;
+  status_pagamento: string;
   observacao?: string;
 }
 
 @Component({
   selector: 'app-lista',
   standalone: true,
-  imports: [FormsModule, CommonModule, TableModule, ButtonModule, CardModule, InputTextModule, RouterLink],
+  imports: [
+    FormsModule,
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    RouterLink
+  ],
   templateUrl: './lista.html',
   styleUrl: './lista.scss'
 })
-export class ListaInquilinos {
+export class ListaInquilinos implements OnInit {
+  inquilinos: Inquilino[] = [];
 
-  inquilinos: Inquilino[] = [
-    { id: 1, nome: 'João Silva', contato: '(47) 99999-1111', documento: '123.456.789-00', pessoas: 3, statusPagamento: 'Em dia' },
-    { id: 2, nome: 'Maria Santos', contato: '(47) 98888-2222', documento: '987.654.321-00', pessoas: 2, statusPagamento: 'Atrasado' },
-    { id: 3, nome: 'Pedro Oliveira', contato: '(47) 97777-3333', documento: '456.789.123-00', pessoas: 1, statusPagamento: 'Em dia' }
-  ];
+  constructor(private http: HttpClient) {}
 
+  ngOnInit() {
+    this.listarInquilinos();
+  }
 
+  listarInquilinos() {
+    this.http.get<Inquilino[]>('http://localhost:8000/inquilinos')
+      .subscribe({
+        next: (dados) => {
+          this.inquilinos = dados;
+        },
+        error: (erro) => {
+          console.error(erro);
+          alert('Erro ao carregar inquilinos.');
+        }
+      });
+  }
+
+  excluir(inquilino: Inquilino) {
+  const confirmar = confirm(`Deseja excluir o inquilino ${inquilino.nome}?`);
+
+  if (!confirmar) {
+    return;
+  }
+
+  this.http.delete(`http://localhost:8000/inquilinos/${inquilino.id}`)
+    .subscribe({
+      next: () => {
+        alert('Inquilino excluído com sucesso!');
+        this.listarInquilinos();
+      },
+      error: (erro) => {
+        console.error(erro);
+        alert('Erro ao excluir inquilino.');
+      }
+    });
+}
 }
