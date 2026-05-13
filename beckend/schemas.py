@@ -49,3 +49,27 @@ class InquilinoResposta(InquilinoBase):
 
     class Config:
         from_attributes = True
+
+
+class SolicitacaoBase(BaseModel):
+    tipo_servico: str
+    data: str
+    custo: Optional[float] = None
+    status: str
+    vinculo_casa: Optional[str] = None
+    observacao: Optional[str] = None
+
+
+class SolicitacaoCriar(SolicitacaoBase):
+    pass
+
+
+class SolicitacaoAtualizar(SolicitacaoBase):
+    pass
+
+
+class SolicitacaoResposta(SolicitacaoBase):
+    id: int
+
+    class Config:
+        from_attributes = True

@@ -33,7 +33,8 @@ export const appRoutes: Routes = [
             { path: 'inquilinos/cadastro', component: CadastroInquilinos },
             { path: 'inquilinos/editar/:id', component: CadastroInquilinos },
             { path: 'solicitacoes', component: ListaSolicitacoes },
-            { path: 'solicitacoes/cadastro', component: CadastroSolicitacoes }
+            { path: 'solicitacoes/cadastro', component: CadastroSolicitacoes },
+            { path: 'solicitacoes/editar/:id', component: CadastroSolicitacoes },
         ]
     },
 

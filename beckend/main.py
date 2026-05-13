@@ -3,14 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import Base, engine, SessionLocal
-from models import Imovel, Inquilino
+from models import Imovel, Inquilino, Solicitacao
+
 from schemas import (
     ImovelCriar,
     ImovelAtualizar,
     ImovelResposta,
     InquilinoCriar,
     InquilinoAtualizar,
-    InquilinoResposta
+    InquilinoResposta,
+    SolicitacaoCriar,
+    SolicitacaoAtualizar,
+    SolicitacaoResposta
 )
 
 Base.metadata.create_all(bind=engine)
@@ -106,6 +110,7 @@ def deletar_imovel(imovel_id: int, db: Session = Depends(get_db)):
 
     return {"mensagem": "Imóvel deletado com sucesso"}
 
+
 @app.post("/inquilinos", response_model=InquilinoResposta)
 def criar_inquilino(inquilino: InquilinoCriar, db: Session = Depends(get_db)):
     novo_inquilino = Inquilino(
@@ -174,3 +179,73 @@ def deletar_inquilino(inquilino_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"mensagem": "Inquilino deletado com sucesso"}
+
+
+@app.post("/solicitacoes", response_model=SolicitacaoResposta)
+def criar_solicitacao(solicitacao: SolicitacaoCriar, db: Session = Depends(get_db)):
+    nova_solicitacao = Solicitacao(
+        tipo_servico=solicitacao.tipo_servico,
+        data=solicitacao.data,
+        custo=solicitacao.custo,
+        status=solicitacao.status,
+        vinculo_casa=solicitacao.vinculo_casa,
+        observacao=solicitacao.observacao
+    )
+
+    db.add(nova_solicitacao)
+    db.commit()
+    db.refresh(nova_solicitacao)
+
+    return nova_solicitacao
+
+
+@app.get("/solicitacoes", response_model=list[SolicitacaoResposta])
+def listar_solicitacoes(db: Session = Depends(get_db)):
+    return db.query(Solicitacao).all()
+
+
+@app.get("/solicitacoes/{solicitacao_id}", response_model=SolicitacaoResposta)
+def buscar_solicitacao(solicitacao_id: int, db: Session = Depends(get_db)):
+    solicitacao = db.query(Solicitacao).filter(Solicitacao.id == solicitacao_id).first()
+
+    if not solicitacao:
+        raise HTTPException(status_code=404, detail="Solicitação não encontrada")
+
+    return solicitacao
+
+
+@app.put("/solicitacoes/{solicitacao_id}", response_model=SolicitacaoResposta)
+def atualizar_solicitacao(
+    solicitacao_id: int,
+    dados: SolicitacaoAtualizar,
+    db: Session = Depends(get_db)
+):
+    solicitacao = db.query(Solicitacao).filter(Solicitacao.id == solicitacao_id).first()
+
+    if not solicitacao:
+        raise HTTPException(status_code=404, detail="Solicitação não encontrada")
+
+    solicitacao.tipo_servico = dados.tipo_servico
+    solicitacao.data = dados.data
+    solicitacao.custo = dados.custo
+    solicitacao.status = dados.status
+    solicitacao.vinculo_casa = dados.vinculo_casa
+    solicitacao.observacao = dados.observacao
+
+    db.commit()
+    db.refresh(solicitacao)
+
+    return solicitacao
+
+
+@app.delete("/solicitacoes/{solicitacao_id}")
+def deletar_solicitacao(solicitacao_id: int, db: Session = Depends(get_db)):
+    solicitacao = db.query(Solicitacao).filter(Solicitacao.id == solicitacao_id).first()
+
+    if not solicitacao:
+        raise HTTPException(status_code=404, detail="Solicitação não encontrada")
+
+    db.delete(solicitacao)
+    db.commit()
+
+    return {"mensagem": "Solicitação deletada com sucesso"}
