@@ -8,6 +8,10 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 interface Inquilino {
   id: number;
@@ -29,6 +33,9 @@ interface Inquilino {
     ButtonModule,
     CardModule,
     InputTextModule,
+    DialogModule,
+    ToastModule,
+    ConfirmDialogModule,
     RouterLink
   ],
   templateUrl: './lista.html',
@@ -37,7 +44,14 @@ interface Inquilino {
 export class ListaInquilinos implements OnInit {
   inquilinos: Inquilino[] = [];
 
-  constructor(private http: HttpClient) {}
+  inquilinoSelecionado: Inquilino | null = null;
+  mostrarDetalhes: boolean = false;
+
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.listarInquilinos();
@@ -51,28 +65,49 @@ export class ListaInquilinos implements OnInit {
         },
         error: (erro) => {
           console.error(erro);
-          alert('Erro ao carregar inquilinos.');
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao carregar inquilinos.'
+          });
         }
       });
   }
 
-  excluir(inquilino: Inquilino) {
-  const confirmar = confirm(`Deseja excluir o inquilino ${inquilino.nome}?`);
-
-  if (!confirmar) {
-    return;
+  verDetalhes(inquilino: Inquilino) {
+    this.inquilinoSelecionado = inquilino;
+    this.mostrarDetalhes = true;
   }
 
-  this.http.delete(`http://localhost:8000/inquilinos/${inquilino.id}`)
-    .subscribe({
-      next: () => {
-        alert('Inquilino excluído com sucesso!');
-        this.listarInquilinos();
-      },
-      error: (erro) => {
-        console.error(erro);
-        alert('Erro ao excluir inquilino.');
+  excluir(inquilino: Inquilino) {
+    this.confirmationService.confirm({
+      message: `Deseja excluir o inquilino ${inquilino.nome}?`,
+      header: 'Confirmar exclusão',
+      icon: 'pi pi-exclamation-triangle',
+
+      accept: () => {
+        this.http.delete(`http://localhost:8000/inquilinos/${inquilino.id}`)
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Inquilino excluído com sucesso!'
+              });
+
+              this.listarInquilinos();
+            },
+            error: (erro) => {
+              console.error(erro);
+
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Erro ao excluir inquilino.'
+              });
+            }
+          });
       }
     });
-}
+  }
 }

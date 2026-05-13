@@ -128,3 +128,20 @@
     width: 100%;
   }
 }
+.detalhes-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detalhes-card p {
+  margin: 0;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 10px;
+  color: #374151;
+}
+
+.detalhes-card strong {
+  color: #047857;
+}
