@@ -57,7 +57,19 @@ export class CadastroSolicitacoes implements OnInit {
     this.http.get<any>(`http://localhost:8000/solicitacoes/${id}`).subscribe({
       next: (solicitacao) => {
         this.tipoServico = solicitacao.tipo_servico;
-        this.data = solicitacao.data ? new Date(solicitacao.data) : null;
+
+        if (solicitacao.data) {
+          const partes = solicitacao.data.split('-');
+
+          this.data = new Date(
+            Number(partes[0]),
+            Number(partes[1]) - 1,
+            Number(partes[2])
+          );
+        } else {
+          this.data = null;
+        }
+
         this.custo = solicitacao.custo;
         this.status = solicitacao.status;
         this.observacao = solicitacao.observacao;

@@ -102,6 +102,48 @@
   font-size: 0.9rem;
 }
 
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  padding: 1rem;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.chart-card ::ng-deep .p-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-card ::ng-deep .p-card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.chart-card ::ng-deep .p-chart {
+  width: 220px !important;
+  height: 220px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-card ::ng-deep canvas {
+  width: 220px !important;
+  height: 220px !important;
+  max-width: 220px !important;
+  max-height: 220px !important;
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -164,6 +206,10 @@
 @media (max-width: 992px) {
   .summary-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
   }
 
   .dashboard-grid {

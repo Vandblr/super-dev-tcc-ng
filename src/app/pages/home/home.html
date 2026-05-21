@@ -2,11 +2,10 @@
 
   <section class="dashboard-hero">
     <div>
-      <span class="tag">Painel do Proprietário</span>
+      <span class="tag">Painel Inteligente</span>
       <h1>Bem-vindo ao HouseManager</h1>
       <p>
-        Acompanhe seus imóveis, inquilinos, solicitações e informações financeiras
-        em um só lugar.
+        Acompanhe seus imóveis, inquilinos, solicitações e custos com dados reais do sistema.
       </p>
     </div>
 
@@ -48,46 +47,77 @@
     </p-card>
   </section>
 
+  <section class="charts-grid">
+    <p-card header="Status dos Imóveis" class="chart-card">
+      <p-chart
+        type="doughnut"
+        [data]="graficoImoveis"
+        [options]="opcoesGrafico"
+      ></p-chart>
+    </p-card>
+
+    <p-card header="Status das Solicitações" class="chart-card">
+      <p-chart
+        type="doughnut"
+        [data]="graficoSolicitacoes"
+        [options]="opcoesGrafico"
+      ></p-chart>
+    </p-card>
+  </section>
+
   <section class="dashboard-grid">
 
-    <p-card header="Pagamentos Recentes" class="panel-card">
-      <p-table [value]="pagamentosRecentes">
+    <p-card header="Últimas Solicitações" class="panel-card">
+      <p-table [value]="solicitacoes">
         <ng-template pTemplate="header">
           <tr>
-            <th>Inquilino</th>
-            <th>Imóvel</th>
-            <th>Valor</th>
+            <th>Serviço</th>
             <th>Status</th>
+            <th>Custo</th>
+            <th>Casa</th>
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-pagamento>
+        <ng-template pTemplate="body" let-solicitacao>
           <tr>
-            <td>{{ pagamento.inquilino }}</td>
-            <td>{{ pagamento.imovel }}</td>
-            <td>{{ pagamento.valor }}</td>
-            <td>{{ pagamento.status }}</td>
+            <td>{{ solicitacao.tipo_servico }}</td>
+            <td>{{ solicitacao.status }}</td>
+            <td>R$ {{ solicitacao.custo }}</td>
+            <td>{{ solicitacao.vinculo_casa || 'Não informado' }}</td>
           </tr>
         </ng-template>
       </p-table>
     </p-card>
 
-    <p-card header="Alertas do Sistema" class="panel-card">
+    <p-card header="Alertas Inteligentes" class="panel-card">
       <div class="alerts">
-        <div class="alert-item warning">
+
+        <div class="alert-item warning" *ngIf="inquilinos.length > 0">
+          <i class="pi pi-users"></i>
+          <span>
+            Existem {{ inquilinos.length }} inquilino(s) cadastrado(s).
+          </span>
+        </div>
+
+        <div class="alert-item warning" *ngIf="cardsResumo.length > 1">
           <i class="pi pi-exclamation-triangle"></i>
-          <span>Aluguel da Casa Verde está atrasado.</span>
+          <span>{{ cardsResumo[1].descricao }}</span>
         </div>
 
-        <div class="alert-item info">
+        <div class="alert-item info" *ngIf="cardsResumo.length > 2">
           <i class="pi pi-info-circle"></i>
-          <span>Solicitação de pintura aguardando conclusão.</span>
+          <span>
+            Existem {{ cardsResumo[2].valor }} solicitação(ões) pendente(s).
+          </span>
         </div>
 
-        <div class="alert-item success">
+        <div class="alert-item success" *ngIf="cardsResumo.length > 0">
           <i class="pi pi-check-circle"></i>
-          <span>Pagamento da Casa Azul confirmado.</span>
+          <span>
+            Dashboard atualizado com dados reais do backend.
+          </span>
         </div>
+
       </div>
     </p-card>
 
@@ -100,7 +130,7 @@
       <button pButton label="Ver Imóveis" icon="pi pi-building" routerLink="/imoveis"></button>
       <button pButton label="Ver Inquilinos" icon="pi pi-users" routerLink="/inquilinos"></button>
       <button pButton label="Ver Solicitações" icon="pi pi-wrench" routerLink="/solicitacoes"></button>
-      <button pButton label="Relatórios" icon="pi pi-chart-bar" class="p-button-secondary"></button>
+      <button pButton label="Cadastrar Inquilino" icon="pi pi-user-plus" routerLink="/inquilinos/cadastro"></button>
     </div>
   </section>
 
