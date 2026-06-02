@@ -40,7 +40,7 @@
     <div class="summary-box">
       <i class="pi pi-check-circle"></i>
       <div>
-        <h3>2</h3>
+        <h3>{{ pagamentosEmDia }}</h3>
         <p>Pagamentos em dia</p>
       </div>
     </div>
@@ -48,8 +48,16 @@
     <div class="summary-box">
       <i class="pi pi-exclamation-triangle"></i>
       <div>
-        <h3>1</h3>
+        <h3>{{ pagamentosAtrasados }}</h3>
         <p>Pagamentos atrasados</p>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <i class="pi pi-file"></i>
+      <div>
+        <h3>{{ semContrato }}</h3>
+        <p>Sem contrato</p>
       </div>
     </div>
   </section>

@@ -57,6 +57,18 @@ export class ListaInquilinos implements OnInit {
     this.listarInquilinos();
   }
 
+  get pagamentosEmDia() {
+    return this.inquilinos.filter(inquilino => inquilino.status_pagamento === 'Em dia').length;
+  }
+
+  get pagamentosAtrasados() {
+    return this.inquilinos.filter(inquilino => inquilino.status_pagamento === 'Atrasado').length;
+  }
+
+  get semContrato() {
+    return this.inquilinos.filter(inquilino => inquilino.status_pagamento === 'Sem contrato').length;
+  }
+
   listarInquilinos() {
     this.http.get<Inquilino[]>('http://localhost:8000/inquilinos')
       .subscribe({
